@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom';
 import '@icedesign/base/reset.scss';
 import router from './router';
 
-import createStore from './state/store';
-import tableOperations from './state/redux/operations';
-import { Provider } from 'react-redux';
 
 const ICE_CONTAINER = document.getElementById('ice-container');
 

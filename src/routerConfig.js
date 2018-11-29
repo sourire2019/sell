@@ -5,14 +5,25 @@
 import BasicLayout from './layouts/BasicLayout';
 import NotFound from './pages/NotFound';
 
+import Page5 from './pages/Page5';
+import Page6 from './pages/Page6';
 import Page4 from './pages/Page4';
-
 
 const routerConfig = [
   {
     path: '/',
     layout: BasicLayout,
     component: Page4,
+  },
+  {
+    path: '/page5',
+    layout: BasicLayout,
+    component: Page5,
+  },
+  {
+    path: '/page6',
+    layout: BasicLayout,
+    component: Page6,
   },
   {
     path: '*',

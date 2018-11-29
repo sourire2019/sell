@@ -8,6 +8,16 @@ const asideMenuConfig = [
     path: '/',
     icon: 'home',
   },
+  {
+    name: 'Nav5',
+    path: '/page5',
+    icon: 'home',
+  },
+  {
+    name: 'Nav6',
+    path: '/page6',
+    icon: 'home',
+  },
 ];
 
 const headerMenuConfig = asideMenuConfig;
