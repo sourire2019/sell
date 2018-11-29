@@ -15,8 +15,8 @@ export default class BasicLayout extends Component {
     return (
       <Layout className="basic-layout">
         <Header />
-        <NavBar />
-        <div style={{ margin: '20px' }}>{this.props.children}</div>
+        {/*<NavBar />*/}
+        <div style={{ margin: '80px 20px 20px 20px' }}>{this.props.children}</div>
         <Footer />
       </Layout>
     );

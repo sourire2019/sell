@@ -8,26 +8,22 @@ export default class TableFilter extends Component {
     super(props);
     this.state = {};
   }
+  add = () => {
+    window.location.href = window.location.origin + '#/add'
+  }
 
   render() {
     return (
       <div style={styles.tableFilter}>
-        <div style={styles.title}>权限管理</div>
+        <div style={styles.title}>商品展示</div>
         <div style={styles.filter}>
-          <div style={styles.filterItem}>
-            <span style={styles.filterLabel}>名称：</span>
-            <Input />
-          </div>
-          <div style={styles.filterItem}>
-            <span style={styles.filterLabel}>角色：</span>
-            <Select style={{ width: '200px' }}>
-              <Select.Option value="all">全部</Select.Option>
-              <Select.Option value="admin">管理员</Select.Option>
-              <Select.Option value="dbo">运营</Select.Option>
-            </Select>
-          </div>
-          <Button type="primary" style={styles.submitButton}>
-            查询
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: 100 }}
+            onClick = {this.add}
+          >
+            添加商品
           </Button>
         </div>
       </div>

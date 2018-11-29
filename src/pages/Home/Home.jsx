@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import AuthorityTable from './components/AuthorityTable';
 
-export default class Page5 extends Component {
-  static displayName = 'Page5';
+export default class Home extends Component {
+  static displayName = 'Home';
 
   constructor(props) {
     super(props);

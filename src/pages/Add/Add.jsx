@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import SettingsForm from './components/SettingsForm';
 
-export default class Page4 extends Component {
-  static displayName = 'Page4';
+export default class Add extends Component {
+  static displayName = 'Add';
 
   constructor(props) {
     super(props);

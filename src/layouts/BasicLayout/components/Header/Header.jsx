@@ -5,6 +5,7 @@ import FoundationSymbol from 'foundation-symbol';
 import IceImg from '@icedesign/img';
 import Logo from '../Logo';
 import './Header.scss';
+import cookie from 'react-cookies'
 
 @withRouter
 export default class Header extends Component {
@@ -15,15 +16,20 @@ export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    
   }
 
+  drop = () => {
+    cookie.remove("login")
+  }
   render() {
     return (
       <div className="header-container">
         <div className="header-content">
           <Logo isDark />
-
-          <Balloon
+          {
+            cookie.load("login")==undefined ? ("") :(
+              <Balloon
             trigger={
               <div
                 className="ice-design-header-userpannel"
@@ -36,15 +42,16 @@ export default class Header extends Component {
                 <IceImg
                   height={40}
                   width={40}
-                  src={require('./images/avatar.png')}
+                  src={require('./images/logo.png')}
+                  style = {{background : 'white'}}
                   className="user-avatar"
                 />
                 <div className="user-profile">
                   <span className="user-name" style={{ fontSize: '13px' }}>
-                    淘小宝
+                    个人
                   </span>
                   <br />
-                  <span className="user-department">技术部</span>
+                  <span className="user-department">中心</span>
                 </div>
                 <Icon
                   type="arrow-down-filling"
@@ -58,25 +65,28 @@ export default class Header extends Component {
           >
             <ul>
               <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/home">
                   <FoundationSymbol type="person" size="small" />
                   我的主页
                 </Link>
               </li>
               <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/add">
                   <FoundationSymbol type="repair" size="small" />
-                  设置
+                  添加商品
                 </Link>
               </li>
               <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link to="/login" onClick = {this.drop}>
                   <FoundationSymbol type="compass" size="small" />
                   退出
                 </Link>
               </li>
             </ul>
           </Balloon>
+            )
+          }
+          
         </div>
       </div>
     );

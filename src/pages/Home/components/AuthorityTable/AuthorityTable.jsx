@@ -17,6 +17,7 @@ export default class AuthorityTable extends Component {
   render() {
     return (
       <div style={styles.container}>
+        <TableFilter />
         <CustomTable />
       </div>
     );

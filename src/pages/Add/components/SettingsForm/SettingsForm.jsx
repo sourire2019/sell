@@ -123,7 +123,7 @@ export default class SettingsForm extends Component {
     let result = await add(this.state.value)
     if(result.message =="success"){
     
-       window.location.href = window.location.origin + '#/page5'
+       window.location.href = window.location.origin + '#/home'
     }else{
       alert("添加失败")
     }
@@ -133,6 +133,9 @@ export default class SettingsForm extends Component {
       value,
     });
   };
+  close = () => {
+    window.location.href = window.location.origin + '#/home'
+  }
   render() {
     return (
       <div className="settings-form">
@@ -225,6 +228,14 @@ export default class SettingsForm extends Component {
                 onClick={this.validateAllFormField}
               >
                 提 交
+              </Button>
+              <Button
+                size="large"
+                type="primary"
+                style={{ width: 100 , marginLeft : '10px'}}
+                onClick={this.close}
+              >
+                取 消
               </Button>
             </Col>
           </Row>

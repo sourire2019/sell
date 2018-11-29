@@ -4,20 +4,10 @@
 
 const asideMenuConfig = [
   {
-    name: 'Nav4',
+    name: '主页',
     path: '/',
     icon: 'home',
-  },
-  {
-    name: 'Nav5',
-    path: '/page5',
-    icon: 'home',
-  },
-  {
-    name: 'Nav6',
-    path: '/page6',
-    icon: 'home',
-  },
+  }
 ];
 
 const headerMenuConfig = asideMenuConfig;

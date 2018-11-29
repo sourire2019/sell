@@ -5,25 +5,36 @@
 import BasicLayout from './layouts/BasicLayout';
 import NotFound from './pages/NotFound';
 
-import Page5 from './pages/Page5';
-import Page6 from './pages/Page6';
-import Page4 from './pages/Page4';
+import Home from './pages/Home';
+import Upload from './pages/Upload';
+import Login from './pages/Login';
+import Add from './pages/Add';
 
 const routerConfig = [
   {
+    path: '/home',
+    layout: BasicLayout,
+    component: Home,
+  },
+  {
+    path: '/add',
+    layout: BasicLayout,
+    component: Add,
+  },
+  {
+    path: '/upload',
+    layout: BasicLayout,
+    component: Upload,
+  },
+  {
     path: '/',
     layout: BasicLayout,
-    component: Page4,
+    component: Login,
   },
   {
-    path: '/page5',
+    path: '/login',
     layout: BasicLayout,
-    component: Page5,
-  },
-  {
-    path: '/page6',
-    layout: BasicLayout,
-    component: Page6,
+    component: Login,
   },
   {
     path: '*',

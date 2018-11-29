@@ -90,6 +90,10 @@ mock.onGet('/api/select/13').reply(200,{
 		}
 	]
 })
+
+mock.onPost('/api/login').reply(200,{
+	'message' : 'success'
+})
 const add = (value) =>{
   return axios.post(`/api/add`)
     .then(resp => {
@@ -123,7 +127,16 @@ const compile = (id) =>{
 	.then(resp => {
 		return resp.data.data[0]
 	}).catch(error => {
-		console.log(error)
+		console.error(error)
+	})
+}
+
+const login = (value) => {
+	return axios.post(`/api/login`)
+	.then(resp => {
+		return resp.data;
+	}).catch(error => {
+		console.error(error)
 	})
 }
 
@@ -131,5 +144,6 @@ export default {
   add,
   select,
   compile,
-  upload
+  upload,
+  login
 }

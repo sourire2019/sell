@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Balloon, Icon } from '@icedesign/base';
+import { Table, Pagination, Balloon, Icon , Button} from '@icedesign/base';
 
 import Operations from "../../../../api/api";
 
@@ -31,7 +31,7 @@ export default class Home extends Component {
 
   click = (index) => {
     let id = this.state.dataSource[index].id
-    window.location.href = window.location.origin + '#/page6?id=' + id
+    window.location.href = window.location.origin + '#/upload?id=' + id
   }
   renderOper = (record, index) => {
     return (

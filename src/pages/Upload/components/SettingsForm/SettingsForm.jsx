@@ -67,13 +67,13 @@ export default class SettingsForm extends Component {
     let result = await upload(uploadValue)
     if(result.message =="success"){
     
-       window.location.href = window.location.origin + '#/page5'
+       window.location.href = window.location.origin + '#/home'
     }else{
       alert("添加失败")
     }
   };
   close = () => {
-    window.location.href = window.location.origin + '#/page5'
+    window.location.href = window.location.origin + '#/home'
   }
   namechange (e) {
     this.setState({
