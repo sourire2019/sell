@@ -116,6 +116,18 @@ export default class Home extends Component {
           />
           <Table.Column
             width={100}
+            title="商品数量"
+            cell = {<span>1</span>}
+            align="center"
+          />
+          <Table.Column
+            width={100}
+            title="剩余商品数量"
+            dataIndex="num"
+            align="center"
+          />
+          <Table.Column
+            width={100}
             title="操作"
             cell={this.renderOper}
             align="center"

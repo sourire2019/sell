@@ -11,7 +11,8 @@ import Web3 from 'web3';
 import TruffleContract from "truffle-contract";
 
 import Sell from '../../../../../build/contracts/Sell.json';
-
+import { Timeline, TimelineEvent } from 'react-event-timeline';
+import 'font-awesome/css/font-awesome.min.css'
 const { Row, Col } = Grid;
 
 export default class BrandDisplay extends Component {
@@ -27,7 +28,8 @@ export default class BrandDisplay extends Component {
       price : '',
       description : '',
       status : 0,
-      breed : ''
+      breed : '',
+      num : 1
     };
     this.move = this.move.bind(this);
     this.mouseout = this.mouseout.bind(this);
@@ -60,6 +62,7 @@ export default class BrandDisplay extends Component {
             description : result.description,
             status : result.status,
             breed : result.breed,
+            num : result.num,
             web3Provider : web3.currentProvider,
             web3 : web3,
             Purchase : Purchase
@@ -93,7 +96,7 @@ export default class BrandDisplay extends Component {
     var x=e.clientX;
     var y=e.clientY;
     var maskl=x-this.maxbox.offsetLeft-this.mask.offsetWidth/2;
-    var maskt=y-this.maxbox.offsetTop+this.mask.offsetHeight/2;
+    var maskt=y-this.maxbox.offsetTop-this.mask.offsetHeight/2;
     if(maskl<=0){
       maskl=0;
     }else if(maskl>=this.maxbox.offsetWidth-this.mask.offsetWidth){
@@ -191,10 +194,12 @@ export default class BrandDisplay extends Component {
       }else {
         athis.state.Purchase.deployed().then(instance => {
           let str = '0xf245074E0C708c9D06070FB8248f5e38bfCf9375';
-          return instance.transfer(str, athis.state.price,  {from : accounts[0]})
+          return instance.buy(athis.state.id,athis.state.price*1e2, str, {from : accounts[0]})
         }).then(result => {
-          console.log(result)
-          alert("购买成功")
+          if(result.tx) {
+            window.location.href = window.location.origin + '#/buy'
+          }
+          
         })
       }
     })
@@ -252,20 +257,16 @@ export default class BrandDisplay extends Component {
                 <strong>价格 ： </strong><span>{this.state.price}</span>
               </div>
               <br />
-              <div className = 'topr-div'>
-                <strong>描述 ： </strong><span>{this.state.description}</span>
-              </div>
-              <br />
               <div style={{overflow: 'hidden',position : 'absolute', bottom : 0, width : '300px', marginBottom : '20px'}} onClick = {this.buy}>
-                <a id="dinggou1"><input type="button" value="立即订购" id="dinggou"/></a>
+                <a id="dinggou1"><input type="button" disabled = {this.state.num ==0 ? ("disabled") : ("")}value="立即订购" id="dinggou"/></a>
               </div>
             </div>
           </div>
         </div>
         <div className = 't1' id = 'daohang1'>
           <a onClick = {() => {this.changetab(0)}}><span className="t2" style={{background: '#efefef', fontWeight: 'bolder'}} ref={el => this.show = el} >商品展示</span></a>
-          <a onClick = {() => {this.changetab(1)}}><span className="t2" ref={el => this.flow = el}>配镜流程</span></a>
-          <a onClick = {() => {this.changetab(2)}}><span className="t2" ref={el => this.assess = el}>用户评价</span></a>
+          <a onClick = {() => {this.changetab(1)}}><span className="t2" ref={el => this.flow = el}>追溯信息</span></a>
+          <a onClick = {() => {this.changetab(2)}}><span className="t2" ref={el => this.assess = el}>商品描述</span></a>
           <a onClick = {() => {this.changetab(3)}}><span className="t2" ref={el => this.service = el}>售后服务</span></a>
         </div>
         <div ref={el => this.showdiv = el}>
@@ -285,18 +286,113 @@ export default class BrandDisplay extends Component {
           </div>
         </div>
         <div ref={el => this.flowdiv = el} style = {{display : 'none'}} >
-          <div id="shangpin">配镜流程</div>
+          <div id="shangpin">追溯信息</div>
+          <div id = 'xijie'>
+            <Timeline style = {{margin : '0 auto'}}>
+              <TimelineEvent
+                key = '1'
+                title = '喂食'
+                icon={<i class="fa fa-briefcase"></i>}
+                iconColor="#0D3799"
+                container="card"
+                className="timeline-event"
+                titleStyle={{ fontWeight: "400" }}
+                style={{ width: "80%" }}
+                cardHeaderStyle={{
+                  backgroundColor: "#6283D0",
+                  fontSize: "11pt"
+                }}
+              >
+                <h4>内容 ： 今日喂食1kg</h4>
+                <span>备注 ： 饲料： 四月费</span>
+                <br />
+                <small>2018/8/29 11:03:10</small>
+              </TimelineEvent>
+              <TimelineEvent
+                key = '2'
+                title = '健康'
+                icon={<i class="fa fa-briefcase"></i>}
+                iconColor="#0D3799"
+                container="card"
+                className="timeline-event"
+                titleStyle={{ fontWeight: "400" }}
+                style={{ width: "80%" }}
+                cardHeaderStyle={{
+                  backgroundColor: "#6283D0",
+                  fontSize: "11pt"
+                }}
+                contentStyle={{
+                  backgroundColor: "transparent"
+                }}
+              >
+                <h4>内容 ： 生病感冒</h4>
+                <span>备注 ： </span>
+                <br />
+                <small>2018/8/29 11:04:03</small>
+              </TimelineEvent>
+              <TimelineEvent
+                key = '3'
+                title = '防疫'
+                icon={<i class="fa fa-briefcase"></i>}
+                iconColor="#0D3799"
+                container="card"
+                className="timeline-event"
+                titleStyle={{ fontWeight: "400" }}
+                style={{ width: "80%" }}
+                cardHeaderStyle={{
+                  backgroundColor: "#6283D0",
+                  fontSize: "11pt"
+                }}
+                contentStyle={{
+                  backgroundColor: "transparent"
+                }}
+              >
+                <h4>内容 ： 防疫正常</h4>
+                <span>备注 ： </span>
+                <br />
+                <small>2018/8/29 11:03:10</small>
+              </TimelineEvent>
+              <TimelineEvent
+                key = '4'
+                title = '出栏体重'
+                icon={<i class="fa fa-briefcase"></i>}
+                iconColor="#0D3799"
+                container="card"
+                className="timeline-event"
+                titleStyle={{ fontWeight: "400" }}
+                style={{ width: "80%" }}
+                cardHeaderStyle={{
+                  backgroundColor: "#6283D0",
+                  fontSize: "11pt"
+                }}
+                contentStyle={{
+                  backgroundColor: "transparent"
+                }}
+              >
+                <h4>内容 ： 体重为 ： 123</h4>
+                <span>备注 ： </span>
+                <br />
+                <small>2018/8/29 11:03:10</small>
+              </TimelineEvent>
+            </Timeline>
+          </div>
         </div>
         <div ref={el => this.assessdiv = el} style = {{display : 'none'}}>
-          <div id="shangpin">用户评价</div>
+          <div id="shangpin">商品描述</div>
+          <div id = 'xijie'>
+            {this.state.description}
+          </div>
         </div>
         <div ref={el => this.servicediv = el} style = {{display : 'none'}}>
           <div id="shangpin">售后服务</div>
+          <div id = 'pingjia'>
+            <span>联系方式 ： </span> 1238747849324
+          </div>
         </div>
         <div className="t1" style={{marginTop: '40px'}} id="daohang2">
           <a onClick = {() => {this.changetab(0)}}><span className="t2" style={{background: '#efefef', fontWeight: 'bolder'}} ref={el => this.show2 = el} >商品展示</span></a>
-          <a onClick = {() => {this.changetab(1)}}><span className="t2" ref={el => this.flow2 = el}>配镜流程</span></a>
-          <a onClick = {() => {this.changetab(2)}}><span className="t2" ref={el => this.assess2 = el}>用户评价</span></a>
+          <a onClick = {() => {this.changetab(1)}}><span className="t2" ref={el => this.flow2 = el}>追溯信息</span></a>
+          <a onClick = {() => {this.changetab(2)}}><span className="t2" ref={el => this.assess2 = el}>商品描述</span></a>
           <a onClick = {() => {this.changetab(3)}}><span className="t2" ref={el => this.service2 = el}>售后服务</span></a>
         </div>
       </div>

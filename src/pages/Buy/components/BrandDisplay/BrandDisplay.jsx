@@ -95,7 +95,8 @@ export default class BrandDisplay extends Component {
                     <strong>价格</strong>: <span >{item.price}</span><br/>
                     <strong>状态</strong> : <span> {item.status ==0 ? ("养殖场") : ("其他")}</span><br />
                     <strong>品种</strong> : <span>{item.breed}</span><br/>
-                     <button className="btn btn-default btn-adopt" type="button"  onClick = {() =>{this.onClick(item.id)}}>详情</button>
+                    <strong>剩余数量</strong> : <span>{item.num}</span><br/>
+                    <button className="btn btn-default btn-adopt" type="button"  onClick = {() =>{this.onClick(item.id)}}>详情</button>
                   </div>
                 </div>
               </Col>
