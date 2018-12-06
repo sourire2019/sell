@@ -179,8 +179,6 @@ export default class BrandDisplay extends Component {
 
     let x = e.clientX - this.div.offsetWidth;
     let y = e.clientY - this.div.offsetHeight;
-    console.log(12,e.clientX)
-    console.log(this.div.offsetWidth)
       if(x <=0){
         x =0
       }else if( x >= this.div.offsetWidth -this.movediv.offsetWidth ){

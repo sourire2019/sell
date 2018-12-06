@@ -158,7 +158,6 @@ export default class SettingsForm extends Component {
         console.log(err)
       }else{
         athis.state.Purchase.deployed().then( instance => {
-          console.log(athis.state.value)
           return instance.addGoods(athis.state.value.name, athis.state.value.price, athis.state.value.description, athis.state.value.status, athis.state.value.breed, {from : accounts[0]})
         }
 

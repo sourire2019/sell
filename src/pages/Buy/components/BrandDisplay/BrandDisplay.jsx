@@ -43,7 +43,6 @@ export default class BrandDisplay extends Component {
         Purchase.deployed().then( instance => {
           return instance.getTotal()
         }).then(result => {
-          console.log(result)
           athis.setState({
             dataSource : result
           })
