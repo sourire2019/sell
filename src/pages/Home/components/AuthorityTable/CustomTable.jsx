@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { Table, Pagination, Balloon, Icon , Button} from '@icedesign/base';
 
-import Operations from "../../../../api/api";
 
-const select = Operations.select
+import Web3 from 'web3';
+import TruffleContract from "truffle-contract";
+
+import Sell from '../../../../../build/contracts/Sell.json'
+
+
 
 
 export default class Home extends Component {
@@ -17,9 +21,28 @@ export default class Home extends Component {
     };
   }
   async componentWillMount () {
-    let result = await select();
-    this.setState({
-      dataSource : result.data
+    if (typeof web3 !== 'undefined') {
+      web3 =await new Web3(web3.currentProvider);
+    } else {
+      web3 = await new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+    }
+    let Purchase = await TruffleContract(Sell);
+    Purchase.setProvider(web3.currentProvider);
+    let athis = this;
+    web3.eth.getAccounts(function(err,accounts){
+      if(err){
+        console.log(err)
+      }else{
+        
+        Purchase.deployed().then( instance => {
+          return instance.getTotal()
+        }).then(result => {
+          athis.setState({
+            dataSource : result
+          })
+        })
+
+      }
     })
 
   }
@@ -52,65 +75,49 @@ export default class Home extends Component {
         >
           <Table.Column
             width={100}
-            lock="left"
             title="序列号"
             dataIndex="id"
             align="center"
           />
           <Table.Column
             width={100}
-            lock="left"
             title="商品名称"
             dataIndex="name"
             align="center"
           />
           <Table.Column
             width={100}
-            lock="left"
-            title="商品数量"
-            dataIndex="num"
-            align="center"
-          />
-          <Table.Column
-            width={100}
-            lock="left"
             title="商品价格"
             dataIndex="price"
             align="center"
           />
           <Table.Column
             width={100}
-            lock="left"
-            title="已售商品数量"
-            dataIndex="sell"
+            title="商品品种"
+            dataIndex="breed"
             align="center"
           />
           <Table.Column
             width={100}
-            lock="left"
+            title="商品状态"
+            dataIndex="status"
+            cell = { row => (
+              row == 0 ? ("养殖场") : ("其他")
+            )
+
+            }
+            align="center"
+          />
+          <Table.Column
+            width={100}
             title="商品描述"
             dataIndex="description"
             align="center"
           />
           <Table.Column
             width={100}
-            lock="left"
-            title="第一次更新时间"
-            dataIndex="time"
-            align="center"
-          />
-          <Table.Column
-            width={100}
-            lock="left"
-            title="最后一次更新时间"
-            dataIndex="updatetime"
-            align="center"
-          />
-          <Table.Column
-            width={100}
             title="操作"
             cell={this.renderOper}
-            lock="left"
             align="center"
           />
         </Table>

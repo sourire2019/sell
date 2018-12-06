@@ -10,6 +10,9 @@ import Upload from './pages/Upload';
 import Login from './pages/Login';
 import Add from './pages/Add';
 
+import Buy from './pages/Buy';
+import Detail from './pages/Detail';
+
 const routerConfig = [
   {
     path: '/home',
@@ -35,6 +38,16 @@ const routerConfig = [
     path: '/login',
     layout: BasicLayout,
     component: Login,
+  },
+  {
+    path: '/buy',
+    layout: BasicLayout,
+    component: Buy,
+  },
+  {
+    path: '/detail',
+    layout: BasicLayout,
+    component: Detail,
   },
   {
     path: '*',

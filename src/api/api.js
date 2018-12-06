@@ -94,6 +94,217 @@ mock.onGet('/api/select/13').reply(200,{
 mock.onPost('/api/login').reply(200,{
 	'message' : 'success'
 })
+
+mock.onGet('/api/selectgoods').reply(200,{
+	data : [
+		{
+			brand: "大众",
+			location: "中国上海 ",
+			merchantId: "1",
+			name: "V6发动机",
+			partsId: 0,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png", "src/pages/Buy/components/BrandDisplay/img/bg-index.png", "src/pages/Buy/components/BrandDisplay/img/jsta.png"],
+			price: "11.1",
+			stock: 3000,
+			surplusstock: 2781,
+		},{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 1,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		},{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 2,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		},{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 3,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		},{
+			brand: "大众",
+			location: "中国上海 ",
+			merchantId: "1",
+			name: "V6发动机",
+			partsId: 4,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "11.1",
+			stock: 3000,
+			surplusstock: 2781
+		},{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 5,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		},{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 6,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		},{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 7,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		}
+	]
+})
+
+
+mock.onGet('/api/selectgoods/0').reply(200,{
+	data : [
+		{
+			brand: "大众",
+			location: "中国上海 ",
+			merchantId: "1",
+			name: "V6发动机",
+			partsId: 0,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png", "src/pages/Buy/components/BrandDisplay/img/bg-index.jpg", "src/pages/Buy/components/BrandDisplay/img/jsta.png"],
+			price: "11.1",
+			stock: 3000,
+			surplusstock: 2781,
+		}
+	]
+})
+mock.onGet('/api/selectgoods/1').reply(200,{
+	data : [
+		{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 1,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		}
+	]
+})
+mock.onGet('/api/selectgoods/2').reply(200,{
+	data : [
+		{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 2,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		}
+	]
+})
+mock.onGet('/api/selectgoods/3').reply(200,{
+	data : [
+		{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 3,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		}
+	]
+})
+
+mock.onGet('/api/selectgoods/4').reply(200,{
+	data : [
+		{
+			brand: "大众",
+			location: "中国上海 ",
+			merchantId: "1",
+			name: "V6发动机",
+			partsId: 4,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "11.1",
+			stock: 3000,
+			surplusstock: 2781
+		}
+	]
+})
+
+mock.onGet('/api/selectgoods/5').reply(200,{
+	data : [
+		{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 5,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		}
+	]
+})
+mock.onGet('/api/selectgoods/6').reply(200,{
+	data : [
+		{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 6,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		}
+	]
+})
+mock.onGet('/api/selectgoods/7').reply(200,{
+	data : [
+		{
+			brand: "卡迪拉克",
+			location: "美国",
+			merchantId: "3",
+			name: "V8发动机",
+			partsId: 7,
+			picture: ["src/pages/Buy/components/BrandDisplay/img/logo.png"],
+			price: "22.2",
+			stock: 4000,
+			surplusstock: 991
+		}
+	]
+})
+
 const add = (value) =>{
   return axios.post(`/api/add`)
     .then(resp => {
@@ -140,10 +351,43 @@ const login = (value) => {
 	})
 }
 
+const selectgoods = () =>{
+	return axios.get(`/api/selectgoods`)
+    .then(resp => {
+      return resp.data
+    }).catch(error => {
+      console.error(error)
+    })
+}
+
+const detail = (id) =>{
+	let url = "/api/selectgoods/"+id;
+	return axios.get(url)
+	.then(resp => {
+		return resp.data.data[0]
+	}).catch(error => {
+		console.error(error)
+	})
+}
+
+const buy = (value) => {
+	console.log(value)
+	return axios.get('/api/add')
+	.then(resp => {
+		return resp.data
+	}).catch(error => {
+		console.error(error)
+	})
+}
+
+
 export default {
   add,
   select,
   compile,
   upload,
-  login
+  login,
+  selectgoods,
+  detail,
+  buy
 }

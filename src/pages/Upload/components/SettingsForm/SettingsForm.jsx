@@ -9,7 +9,10 @@ import {
 } from '@icedesign/form-binder';
 import './SettingsForm.scss';
 
+import Web3 from 'web3';
+import TruffleContract from "truffle-contract";
 
+import Sell from '../../../../../build/contracts/Sell.json'
 
 const { Row, Col } = Grid;
 const { Group: RadioGroup } = Radio;
@@ -31,46 +34,69 @@ export default class SettingsForm extends Component {
     this.state = {
       id : window.location.hash.split("=")[1] || "0",
       name : '',
-      num : '',
       price : '',
-      description : ''
+      description : '',
+      picture : [],
+      web3Provider : null,
+      status : 0,
+      breed : ''
     };
     this.namechange = this.namechange.bind(this);
-    this.numchange = this.numchange.bind(this);
     this.pricechange = this.pricechange.bind(this);
     this.descriptionchange = this.descriptionchange.bind(this);
+    this.breedchange = this.breedchange.bind(this);
   }
  
   async componentWillMount () {
-    let result = await compile(this.state.id);
-    this.setState({
-      name : result.name,
-      num : result.num,
-      price : result.price,
-      description : result.description,
-      value : {}
+
+    if (typeof web3 !== 'undefined') {
+      web3 =await new Web3(web3.currentProvider);
+    } else {
+      web3 = await new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+    }
+    let Purchase = await TruffleContract(Sell);
+    Purchase.setProvider(web3.currentProvider);
+    let athis = this;
+    web3.eth.getAccounts(function(err,accounts){
+      if(err){
+        console.log(err)
+      }else{
+        
+        Purchase.deployed().then( instance => {
+          return instance.select(athis.state.id)
+        }).then(result => {
+          athis.setState({
+            name : result.name,
+            price : result.price,
+            description : result.description,
+            status : result.status,
+            breed : result.breed,
+            web3Provider : web3.currentProvider,
+            web3 : web3,
+            Purchase : Purchase
+          })
+        })
+
+      }
     })
 
   }
-  formChange = (value) => {
-    this.setState({
-      value,
-    });
-  };
+
 
   validateAllFormField = async() => {
-    let value = this.state.value;
-    let uploadValue = {
-      id : this.state.id,
-      value : value
-    }
-    let result = await upload(uploadValue)
-    if(result.message =="success"){
-    
-       window.location.href = window.location.origin + '#/home'
-    }else{
-      alert("添加失败")
-    }
+
+    let athis = this;
+    this.state.web3.eth.getAccounts(function(err,accounts){
+      if(err){
+        console.log(err)
+      }else{
+        athis.state.Purchase.deployed().then(function(instance){
+        return instance.upload(athis.state.id, athis.state.name, athis.state.price, athis.state.description, athis.state.status, athis.state.breed, {from : accounts[0]});
+        }).then( result => {
+          window.location.href = window.location.origin + '#/home'
+        })
+      }
+    })
   };
   close = () => {
     window.location.href = window.location.origin + '#/home'
@@ -80,11 +106,7 @@ export default class SettingsForm extends Component {
       name : e
     })
   }
-  numchange (e) {
-    this.setState({
-      num : e
-    })
-  }
+
   pricechange (e) {
     this.setState({
       price : e
@@ -95,13 +117,17 @@ export default class SettingsForm extends Component {
       description : e
     })
   }
+  breedchange (e) {
+    this.setState({
+      breed : e
+    })
+  }
   render() {
     return (
       <div className="settings-form">
         <IceContainer>
           <IceFormBinderWrapper
-            value={this.state.value}
-            onChange={this.formChange}
+            value={this.state}
             ref="form"
           >
             <div style={styles.formContent}>
@@ -120,18 +146,6 @@ export default class SettingsForm extends Component {
 
               <Row style={styles.formItem}>
                 <Col xxs="6" s="3" l="3" style={styles.label}>
-                  商品数量 ：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder name="num" required max={10} message="必填">
-                    <Input type="string" name="num" min="1" max="999" size="large" value = {this.state.num} onChange = {this.numchange}/>
-                  </IceFormBinder>
-                  <IceFormError name="num" />
-                </Col>
-              </Row>
-
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
                   商品价格 ：
                 </Col>
                 <Col s="12" l="10">
@@ -139,6 +153,17 @@ export default class SettingsForm extends Component {
                     <Input type="string" name="price" size="large" value = {this.state.price} onChange = {this.pricechange}/>
                   </IceFormBinder>
                   <IceFormError name="price" />
+                </Col>
+              </Row>
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
+                  商品品种 ：
+                </Col>
+                <Col s="12" l="10">
+                  <IceFormBinder name="breed" required max={10} message="必填">
+                    <Input type="string" name="breed" size="large" value = {this.state.breed} onChange = {this.breedchange}/>
+                  </IceFormBinder>
+                  <IceFormError name="breed" />
                 </Col>
               </Row>
 

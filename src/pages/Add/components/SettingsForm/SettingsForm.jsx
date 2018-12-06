@@ -12,6 +12,11 @@ import './index.css'
 import FlipMove from 'react-flip-move';
 import Operations from "../../../../api/api";
 
+import Web3 from 'web3';
+import TruffleContract from "truffle-contract";
+
+import Sell from '../../../../../build/contracts/Sell.json'
+
 const add = Operations.add
 
 const { Row, Col } = Grid;
@@ -35,13 +40,37 @@ export default class SettingsForm extends Component {
         name : "",
         price : "",
         num : "",
-        pictures : []
+        pictures : [],
+        breed : '',
+        status : 0
       }
     };
     this.inputElement = '';
     this.triggerFileUpload = this.triggerFileUpload.bind(this);
     this.onDropFile = this.onDropFile.bind(this);
   }
+
+  componentWillMount = async() => {
+
+    if (typeof web3 !== 'undefined') {
+      web3 =await new Web3(web3.currentProvider);
+    } else {
+      web3 = await new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+    }
+    this.setState({
+      web3Provider : web3.currentProvider,
+      web3 : web3
+    })
+    this.initContract();
+  }
+
+  initContract = () => {
+
+    let Purchase = TruffleContract(Sell);
+    this.setState({Purchase : Purchase});
+    this.state.Purchase.setProvider(this.state.web3Provider);
+  }
+
   renderPreview() {
     return (
       <div className="uploadPicturesWrapper">
@@ -82,7 +111,7 @@ export default class SettingsForm extends Component {
         dataURLs.push(newFileData.dataURL);
         files.push(newFileData.file);
       });
-      const {name , price , num, description} = this.state.value
+      const {name , price , num, description, breed, status} = this.state.value
       this.setState({
         pictures: dataURLs, 
         files: files, 
@@ -91,7 +120,9 @@ export default class SettingsForm extends Component {
           description : description,
           name : name,
           num : num,
-          price : price
+          price : price,
+          breed : breed,
+          status : status
         }
       });
     });
@@ -120,13 +151,23 @@ export default class SettingsForm extends Component {
   }
 
   validateAllFormField = async(e) => {
-    let result = await add(this.state.value)
-    if(result.message =="success"){
-    
-       window.location.href = window.location.origin + '#/home'
-    }else{
-      alert("添加失败")
-    }
+    var purchaseInstance;
+    let athis = this;
+    this.state.web3.eth.getAccounts(function(err,accounts){
+      if(err){
+        console.log(err)
+      }else{
+        athis.state.Purchase.deployed().then( instance => {
+          console.log(athis.state.value)
+          return instance.addGoods(athis.state.value.name, athis.state.value.price, athis.state.value.description, athis.state.value.status, athis.state.value.breed, {from : accounts[0]})
+        }
+
+        ).then( result => {
+          
+          window.location.href = window.location.origin + '#/home'
+        })
+      }
+    })
   };
   formChange = (value) => {
     this.setState({
@@ -162,18 +203,6 @@ export default class SettingsForm extends Component {
 
               <Row style={styles.formItem}>
                 <Col xxs="6" s="3" l="3" style={styles.label}>
-                  商品数量 ：
-                </Col>
-                <Col s="12" l="10">
-                  <IceFormBinder name="num" required max={10} message="必填">
-                    <Input type="string" name="num" min="1" max="999" size="large"/>
-                  </IceFormBinder>
-                  <IceFormError name="num" />
-                </Col>
-              </Row>
-
-              <Row style={styles.formItem}>
-                <Col xxs="6" s="3" l="3" style={styles.label}>
                   商品价格 ：
                 </Col>
                 <Col s="12" l="10">
@@ -203,6 +232,18 @@ export default class SettingsForm extends Component {
                     {this.renderPreview()}
                   </div>
                   
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col xxs="6" s="3" l="3" style={styles.label}>
+                  商品品种：
+                </Col>
+                <Col s="12" l="10" required max={10} message="必填">
+                  <IceFormBinder name="breed">
+                    <Input size="large" />
+                  </IceFormBinder>
+                  <IceFormError name="breed" />
                 </Col>
               </Row>
 
